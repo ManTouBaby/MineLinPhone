@@ -10,6 +10,7 @@ import android.os.IBinder;
 
 import com.hrw.linphonelibrary.R;
 import com.hrw.linphonelibrary.call.CallIncomingActivity;
+import com.hrw.linphonelibrary.call.ParamTag;
 
 import org.linphone.core.Call;
 import org.linphone.core.Core;
@@ -75,10 +76,12 @@ public class LinPhoneService extends Service {
         mCoreListener = new CoreListenerStub() {
             @Override
             public void onCallStateChanged(Core core, Call call, Call.State state, String message) {
-                System.out.println( message + "--" + state.toInt());
+                System.out.println(message + "--" + state.toInt());
                 if (state == Call.State.IncomingReceived) {
                     Intent intent = new Intent(LinPhoneService.this, CallIncomingActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra(ParamTag.CALL_NUMBER, call.getRemoteAddress().getUsername());
+                    intent.putExtra(ParamTag.CALL_NAME, call.getRemoteAddress().getDisplayName());
                     startActivity(intent);
                 }
             }

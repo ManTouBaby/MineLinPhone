@@ -8,10 +8,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.hrw.linphonelibrary.LinPhoneHelper;
+import com.hrw.linphonelibrary.call.CallBean;
 import com.hrw.linphonelibrary.listener.OnLoginListener;
 
 import org.linphone.core.Core;
 import org.linphone.core.ProxyConfig;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     EditText mUser;
@@ -37,6 +41,10 @@ public class MainActivity extends AppCompatActivity {
         btVideoOutGo1 = (Button) findViewById(R.id.bt_video_out_go1);
 
 
+        List<CallBean> callBeans = new ArrayList<>();
+        callBeans.add(new CallBean("38110001", "人物名称1"));
+        callBeans.add(new CallBean("38110002", "人物名称2"));
+        LinPhoneHelper.getInstance().setCallList(callBeans);
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,26 +54,25 @@ public class MainActivity extends AppCompatActivity {
         btVideoOutGo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LinPhoneHelper.getInstance().startVideoCall(MainActivity.this, "38110001","人物名称1");
+                LinPhoneHelper.getInstance().startVideoCall(MainActivity.this, "38110001", "人物名称1");
             }
         });
         btOutGo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LinPhoneHelper.getInstance().startVoiceCall(MainActivity.this, "38110001","人物名称1");
+                LinPhoneHelper.getInstance().startVoiceCall(MainActivity.this, "38110001", "人物名称1");
             }
         });
-
         btVideoOutGo1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LinPhoneHelper.getInstance().startVideoCall(MainActivity.this, "38110002","人物名称2");
+                LinPhoneHelper.getInstance().startVideoCall(MainActivity.this, "38110002", "人物名称2");
             }
         });
         btOutGo1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LinPhoneHelper.getInstance().startVoiceCall(MainActivity.this, "38110002","人物名称2");
+                LinPhoneHelper.getInstance().startVoiceCall(MainActivity.this, "38110002", "人物名称2");
             }
         });
         LinPhoneHelper.getInstance().addLoginListener(new OnLoginListener() {

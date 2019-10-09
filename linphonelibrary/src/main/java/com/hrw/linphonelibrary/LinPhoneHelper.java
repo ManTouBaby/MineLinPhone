@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 
+import com.hrw.linphonelibrary.call.CallBean;
 import com.hrw.linphonelibrary.call.CallHelper;
 import com.hrw.linphonelibrary.call.CallOutGoingActivity;
 import com.hrw.linphonelibrary.call.CallSetting;
@@ -19,6 +20,9 @@ import org.linphone.core.ProxyConfig;
 import org.linphone.core.RegistrationState;
 import org.linphone.core.TransportType;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static java.lang.Thread.sleep;
 
 
@@ -29,6 +33,8 @@ import static java.lang.Thread.sleep;
  * @desc:
  */
 public class LinPhoneHelper {
+    private List<CallBean> mCallBeans = new ArrayList<>();
+
     private AndroidAudioManager mAndroidAudioManager;
     private static LinPhoneHelper mLinPhoneHelper;
     private AccountCreator mAccountCreator;
@@ -108,6 +114,21 @@ public class LinPhoneHelper {
 
         mCallSetting.enableVideo(true);
         mCallSetting.setAutomaticallyAcceptVideoRequests(true);
+    }
+
+    public void setCallList(List<CallBean> mCallBeans) {
+        this.mCallBeans = mCallBeans;
+    }
+
+    public String getCallNameByNumber(String callNumber) {
+        String callName = null;
+        for (CallBean callBean : mCallBeans) {
+            if (callBean.getCallNumber().equals(callNumber)) {
+                callName = callBean.getCallName();
+                break;
+            }
+        }
+        return callName;
     }
 
     public CallHelper getCallHelper() {

@@ -128,7 +128,8 @@ public class CallActivity extends Activity implements OnClickListener {
         Intent intent = getIntent();
         mCallName = intent.getStringExtra(ParamTag.CALL_NAME);
         mCallNumber = intent.getStringExtra(ParamTag.CALL_NUMBER);
-        tvCallName.setText(mCallName);
+        String callResult = LinPhoneHelper.getInstance().getCallNameByNumber(mCallName);
+        tvCallName.setText(callResult == null ? mCallName : callResult);
         tvCallNumber.setText(mCallNumber);
 
         mCore.setNativeVideoWindowId(ttvOtherVideo);
